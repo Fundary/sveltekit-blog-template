@@ -1,1 +1,29 @@
-<h1>This is the blog listings page!</h1>
+<script context="module">
+    export const load = async ({ fetch }) => {
+        const posts = await fetch('/api/posts.json')
+        const allPosts = await posts.json()
+
+        return {
+            props: {
+                posts: allPosts
+            }
+        }
+    }
+</script>
+
+<script lang="ts">
+    export let posts: any
+</script>
+
+<ul>
+    {#each posts as post}
+        <li>
+            <h2>
+                <a href={post.path}>
+                    {post.meta.title}
+                </a>
+            </h2>
+            Published {post.meta.date}
+        </li>
+    {/each}
+</ul>
